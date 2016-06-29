@@ -1,0 +1,56 @@
+<html>
+    <body>
+        <pre>
+            hello vm !
+
+            ##注释，看不到
+
+            #*
+            注释，看不到
+             *#
+
+            ##已定义，显示值
+            $!{value1}
+            ##未定义，不显示
+            $!{value2}
+            ##不符合语法规范，原样显示
+            ${value3}
+
+            #foreach($color in $colors)
+                Color $!{foreach.index}/$!{foreach.count}:$!{color}
+            #end
+
+            #foreach($key in $map.keySet())
+                Number $!{foreach.index}/$!{foreach.count}:$!{key} $map.get($key)
+            #end
+
+            #foreach($kv in $map.entrySet())
+                Number $!{foreach.index}/$!{foreach.count}:$!{kv.key} $!{kv.value}
+            #end
+
+            $!{user.username}
+            $!{user.getUsername()}
+
+            #set($title ="nowcode") ##定义一个变量
+            Include: #include("header.vm") ##纯粹把另一个页面的文本包含进来
+            <br>
+            Parse: #parse("header.vm")  ##把另一个页面包含进来，还要对其中的变量进行解析
+
+            #macro(render_color, $color,$index)
+                Color By Macro $index,$color
+            #end
+
+            #foreach($color in $colors)
+                #render_color($color,$foreach.index)
+            #end
+
+            #set($hello = "hello")
+            #set($hw1 = "$!{hello} world") ##双引号会解析变量
+            #set($hw2 ='$!{hello}) world') ##单引号只能原样显示
+
+            hw1:$hw1
+            hw2:$hw2
+
+        </pre>
+    </body>
+</html>
